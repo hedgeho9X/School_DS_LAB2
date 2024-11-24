@@ -27,34 +27,34 @@ public class FindPath extends JFrame {
     private StringBuilder debugInfo = new StringBuilder();
     private JPanel mapPanel;
 
-    // Ìí¼Ó»»Ëã±ÈÀı³£Á¿
+    // æ·»åŠ æ¢ç®—æ¯”ä¾‹å¸¸é‡
     private static final double PIXELS_PER_METER = calculatePixelsPerMeter(
         new Point(738, 551), 
         new Point(751, 653), 
-        100.0  // Êµ¼Ê¾àÀë100Ã×
+        100.0  // å®é™…è·ç¦»100ç±³
     );
 
     public FindPath() {
-        setTitle("Ğ£Ô°µ¼º½ÏµÍ³");
+        setTitle("æ ¡å›­å¯¼èˆªç³»ç»Ÿ");
         setSize(1400, 1000);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
-        // ³õÊ¼»¯±ßÁĞ±í
+        // åˆå§‹åŒ–è¾¹åˆ—è¡¨
         edges = new ArrayList<>();
         
-        // ĞŞ¸ÄÍ¼Æ¬¼ÓÔØºÍÏÔÊ¾
+        // ä¿®æ”¹å›¾ç‰‡åŠ è½½å’Œæ˜¾ç¤º
         try {
             mapImage = new ImageIcon("D:\\tecentQQ_files\\IMG_20241124_190533.jpg");
-            // µ÷ÕûÍ¼Æ¬´óĞ¡Îª´°¿ÚµÄ×óÉÏ²¿·Ö
+            // è°ƒæ•´å›¾ç‰‡å¤§å°ä¸ºçª—å£çš„å·¦ä¸Šéƒ¨åˆ†
             Image img = mapImage.getImage();
             Image scaledImg = img.getScaledInstance(1000, 700, Image.SCALE_SMOOTH);
             mapImage = new ImageIcon(scaledImg);
         } catch (Exception e) {
-            System.err.println("ÎŞ·¨¼ÓÔØµØÍ¼Í¼Æ¬£º" + e.getMessage());
+            System.err.println("æ— æ³•åŠ è½½åœ°å›¾å›¾ç‰‡ï¼š" + e.getMessage());
             e.printStackTrace();
         }
         
-        // ³õÊ¼»¯½ÚµãºÍ±ß
+        // åˆå§‹åŒ–èŠ‚ç‚¹å’Œè¾¹
         nodes = NodeFileManager.loadNodes();
         if (nodes.isEmpty()) {
             nodes = new ArrayList<>();
@@ -63,10 +63,10 @@ public class FindPath extends JFrame {
             edges = NodeFileManager.loadEdges(nodes);
         }
         
-        // ´´½¨Ö÷Ãæ°å£¬Ê¹ÓÃ BorderLayout
+        // åˆ›å»ºä¸»é¢æ¿ï¼Œä½¿ç”¨ BorderLayout
         JPanel mainPanel = new JPanel(new BorderLayout());
         
-        // ´´½¨×ó²àÃæ°å·ÅÖÃµØÍ¼
+        // åˆ›å»ºå·¦ä¾§é¢æ¿æ”¾ç½®åœ°å›¾
         mapPanel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
@@ -81,7 +81,7 @@ public class FindPath extends JFrame {
         };
         mapPanel.setPreferredSize(new Dimension(1000, 800));
         
-        // Ìí¼ÓÊó±ê¼àÌıÆ÷µ½ mapPanel
+        // æ·»åŠ é¼ æ ‡ç›‘å¬å™¨åˆ° mapPanel
         mapPanel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -89,17 +89,17 @@ public class FindPath extends JFrame {
             }
         });
         
-        // ´´½¨ÓÒ²àĞÅÏ¢Ãæ°å
+        // åˆ›å»ºå³ä¾§ä¿¡æ¯é¢æ¿
         pathInfoArea = new JTextArea();
         pathInfoArea.setEditable(false);
-        pathInfoArea.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 14));
+        pathInfoArea.setFont(new Font("å¾®è½¯é›…é»‘", Font.PLAIN, 14));
         JScrollPane scrollPane = new JScrollPane(pathInfoArea);
         scrollPane.setPreferredSize(new Dimension(300, 800));
         
-        // ĞŞ¸Ä¿ØÖÆÃæ°å²¼¾Ö
+        // ä¿®æ”¹æ§åˆ¶é¢æ¿å¸ƒå±€
         JPanel controlPanel = createControlPanel();
         
-        // ×é×°Ãæ°å
+        // ç»„è£…é¢æ¿
         mainPanel.add(mapPanel, BorderLayout.CENTER);
         mainPanel.add(scrollPane, BorderLayout.EAST);
         mainPanel.add(controlPanel, BorderLayout.SOUTH);
@@ -107,13 +107,13 @@ public class FindPath extends JFrame {
         add(mainPanel);
         
         try {
-            locationIcon = new ImageIcon("C:\\Users\\Jeery\\Downloads\\¡ªPngtree¡ªpositioning red cartoon illustration icon_4621669.png");
-            // µ÷ÕûÍ¼±ê´óĞ¡Îª30x30ÏñËØ
+            locationIcon = new ImageIcon("C:\\Users\\Jeery\\Downloads\\â€”Pngtreeâ€”positioning red cartoon illustration icon_4621669.png");
+            // è°ƒæ•´å›¾æ ‡å¤§å°ä¸º30x30åƒç´ 
             Image img = locationIcon.getImage();
             Image newImg = img.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
             locationIcon = new ImageIcon(newImg);
         } catch (Exception e) {
-            System.err.println("ÎŞ·¨¼ÓÔØÎ»ÖÃÍ¼±ê: " + e.getMessage());
+            System.err.println("æ— æ³•åŠ è½½ä½ç½®å›¾æ ‡: " + e.getMessage());
         }
     }
 
@@ -122,14 +122,14 @@ public class FindPath extends JFrame {
         controlPanel.setLayout(new GridLayout(2, 3, 10, 5));
         controlPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         
-        // ³õÊ¼»¯°´Å¥
-        addNodeBtn = new JButton("Ìí¼Ó½Úµã");
-        deleteNodeBtn = new JButton("É¾³ı½Úµã");
-        editNodeBtn = new JButton("±à¼­½Úµã");
-        JButton toggleGraphBtn = new JButton("ÏÔÊ¾/Òş²ØÍ¼");
-        JButton resetBtn = new JButton("ÖØÖÃ");
+        // åˆå§‹åŒ–æŒ‰é’®
+        addNodeBtn = new JButton("æ·»åŠ èŠ‚ç‚¹");
+        deleteNodeBtn = new JButton("åˆ é™¤èŠ‚ç‚¹");
+        editNodeBtn = new JButton("ç¼–è¾‘èŠ‚ç‚¹");
+        JButton toggleGraphBtn = new JButton("æ˜¾ç¤º/éšè—å›¾");
+        JButton resetBtn = new JButton("é‡ç½®");
         
-        // ÉèÖÃ°´Å¥ÊÂ¼ş
+        // è®¾ç½®æŒ‰é’®äº‹ä»¶
         addNodeBtn.addActionListener(e -> {
             isAddingNode = !isAddingNode;
             isDeletingNode = false;
@@ -137,7 +137,7 @@ public class FindPath extends JFrame {
             setActiveButton(addNodeBtn, isAddingNode);
             setActiveButton(deleteNodeBtn, false);
             setActiveButton(editNodeBtn, false);
-            resetPath(); // ÖØÖÃÂ·¾¶×´Ì¬
+            resetPath(); // é‡ç½®è·¯å¾„çŠ¶æ€
         });
         
         deleteNodeBtn.addActionListener(e -> {
@@ -147,7 +147,7 @@ public class FindPath extends JFrame {
             setActiveButton(deleteNodeBtn, isDeletingNode);
             setActiveButton(addNodeBtn, false);
             setActiveButton(editNodeBtn, false);
-            resetPath(); // ÖØÖÃÂ·¾¶×´Ì¬
+            resetPath(); // é‡ç½®è·¯å¾„çŠ¶æ€
         });
         
         editNodeBtn.addActionListener(e -> {
@@ -157,7 +157,7 @@ public class FindPath extends JFrame {
             setActiveButton(editNodeBtn, isEditingNode);
             setActiveButton(addNodeBtn, false);
             setActiveButton(deleteNodeBtn, false);
-            resetPath(); // ÖØÖÃÂ·¾¶×´Ì¬
+            resetPath(); // é‡ç½®è·¯å¾„çŠ¶æ€
         });
         
         toggleGraphBtn.addActionListener(e -> {
@@ -170,7 +170,7 @@ public class FindPath extends JFrame {
             repaint();
         });
         
-        // Ìí¼Ó°´Å¥µ½Ãæ°å
+        // æ·»åŠ æŒ‰é’®åˆ°é¢æ¿
         controlPanel.add(addNodeBtn);
         controlPanel.add(deleteNodeBtn);
         controlPanel.add(editNodeBtn);
@@ -181,7 +181,7 @@ public class FindPath extends JFrame {
     }
 
     private void showConnectionDialog(Node node) {
-        // ´´½¨¸´Ñ¡¿òÁĞ±í
+        // åˆ›å»ºå¤é€‰æ¡†åˆ—è¡¨
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         Map<JCheckBox, Node> checkBoxMap = new HashMap<>();
@@ -198,16 +198,16 @@ public class FindPath extends JFrame {
             }
         }
         
-        // Ìí¼Ó¹ö¶¯Ãæ°åÒÔ´¦Àí´óÁ¿½Úµã
+        // æ·»åŠ æ»šåŠ¨é¢æ¿ä»¥å¤„ç†å¤§é‡èŠ‚ç‚¹
         JScrollPane scrollPane = new JScrollPane(panel);
         scrollPane.setPreferredSize(new Dimension(300, 400));
         
-        // ÏÔÊ¾¶Ô»°¿ò
+        // æ˜¾ç¤ºå¯¹è¯æ¡†
         int result = JOptionPane.showConfirmDialog(this, scrollPane,
-            "Ñ¡ÔñÒªÁ¬½ÓµÄ½Úµã", JOptionPane.OK_CANCEL_OPTION);
+            "é€‰æ‹©è¦è¿æ¥çš„èŠ‚ç‚¹", JOptionPane.OK_CANCEL_OPTION);
             
         if (result == JOptionPane.OK_OPTION) {
-            // ¸üĞÂÁ¬½Ó
+            // æ›´æ–°è¿æ¥
             edges.removeIf(edge -> edge.start == node || edge.end == node);
             
             for (Map.Entry<JCheckBox, Node> entry : checkBoxMap.entrySet()) {
@@ -221,15 +221,15 @@ public class FindPath extends JFrame {
         }
     }
 
-    // Ìí¼Ó¶¨ÒåµÄ·½·¨
+    // æ·»åŠ å®šä¹‰çš„æ–¹æ³•
 
     private void initializeGraph() {
-        // ³õÊ¼»¯Í¼µÄ½ÚµãºÍ±ß
-        // Ê¾Àı£ºaddNode("Í¼Êé¹İ", 100, 200);
+        // åˆå§‹åŒ–å›¾çš„èŠ‚ç‚¹å’Œè¾¹
+        // ç¤ºä¾‹ï¼šaddNode("å›¾ä¹¦é¦†", 100, 200);
     }
 
     private void drawGraph(Graphics2D g2d) {
-        // »æÖÆÍ¼µÄ½ÚµãºÍ±ß
+        // ç»˜åˆ¶å›¾çš„èŠ‚ç‚¹å’Œè¾¹
         g2d.setColor(Color.GRAY);
         for (Edge edge : edges) {
             g2d.drawLine(edge.start.x, edge.start.y, edge.end.x, edge.end.y);
@@ -241,7 +241,7 @@ public class FindPath extends JFrame {
     }
 
     private void drawPaths(Graphics2D g2d) {
-        // »æÖÆÂ·¾¶
+        // ç»˜åˆ¶è·¯å¾„
         if (shortestPath != null) {
             g2d.setColor(Color.RED);
             g2d.setStroke(new BasicStroke(5.0f));
@@ -270,7 +270,7 @@ public class FindPath extends JFrame {
     }
 
     private void handleMouseClick(MouseEvent e) {
-        // ¿¼ÂÇµØÍ¼Ãæ°åµÄÆ«ÒÆÁ¿
+        // è€ƒè™‘åœ°å›¾é¢æ¿çš„åç§»é‡
         int x = e.getX() - 10;
         int y = e.getY() - 10;
         
@@ -281,7 +281,7 @@ public class FindPath extends JFrame {
         } else if (isEditingNode) {
             handleEditNode(e);
         } else {
-            // ´¦ÀíÆÕÍ¨µÄÂ·¾¶Ñ¡Ôñµã»÷
+            // å¤„ç†æ™®é€šçš„è·¯å¾„é€‰æ‹©ç‚¹å‡»
             if (startNode == null) {
                 firstClickPoint = new Point(x, y);
                 startNode = findNearestNode(x, y);
@@ -326,12 +326,12 @@ public class FindPath extends JFrame {
 
     private void findPaths() {
         if (startNode != null && endNode != null) {
-            // Ê¹ÓÃDijkstraËã·¨ÕÒµ½×î¶ÌÂ·¾¶
+            // ä½¿ç”¨Dijkstraç®—æ³•æ‰¾åˆ°æœ€çŸ­è·¯å¾„
             shortestPath = Dijkstra.findShortestPath(nodes, edges, startNode, endNode);
             
-            // ¸üĞÂÂ·¾¶ĞÅÏ¢ÏÔÊ¾
+            // æ›´æ–°è·¯å¾„ä¿¡æ¯æ˜¾ç¤º
             StringBuilder info = new StringBuilder();
-            info.append("×î¶ÌÂ·¾¶£º\n");
+            info.append("æœ€çŸ­è·¯å¾„ï¼š\n");
             if (shortestPath != null) {
                 for (int i = 0; i < shortestPath.size(); i++) {
                     info.append(shortestPath.get(i).name);
@@ -349,10 +349,10 @@ public class FindPath extends JFrame {
         
 
         
-        // Èç¹ûÓĞÂ·¾¶£¬Ìí¼ÓÂ·¾¶ĞÅÏ¢
+        // å¦‚æœæœ‰è·¯å¾„ï¼Œæ·»åŠ è·¯å¾„ä¿¡æ¯
         if (shortestPath != null && !shortestPath.isEmpty()) {
-            info.append("=== Â·¾¶ĞÅÏ¢ ===\n");
-            info.append("×î¶ÌÂ·¾¶£º\n");
+            info.append("=== è·¯å¾„ä¿¡æ¯ ===\n");
+            info.append("æœ€çŸ­è·¯å¾„ï¼š\n");
             for (int i = 0; i < shortestPath.size(); i++) {
                 Node node = shortestPath.get(i);
                 info.append(String.format("%s (%d, %d)", node.name, node.x, node.y));
@@ -362,10 +362,10 @@ public class FindPath extends JFrame {
             }
             info.append("\n\n");
             
-            // Ìí¼ÓÂ·¾¶³¤¶ÈĞÅÏ¢£¨Í¬Ê±ÏÔÊ¾ÏñËØºÍÊµ¼Ê¾àÀë£©
+            // æ·»åŠ è·¯å¾„é•¿åº¦ä¿¡æ¯ï¼ˆåŒæ—¶æ˜¾ç¤ºåƒç´ å’Œå®é™…è·ç¦»ï¼‰
             double pathLengthPixels = calculatePathLength(shortestPath) * PIXELS_PER_METER;
             double pathLengthMeters = calculatePathLength(shortestPath);
-            info.append(String.format("Â·¾¶³¤¶È: %.1f Ã× (%.0f ÏñËØ)\n", 
+            info.append(String.format("è·¯å¾„é•¿åº¦: %.1f ç±³ (%.0f åƒç´ )\n", 
                 pathLengthMeters, pathLengthPixels));
         }
         
@@ -376,7 +376,7 @@ public class FindPath extends JFrame {
         double pixelLength = 0;
         if (path.size() < 2) return 0;
         
-        // ¼ÆËã´Óµã»÷Î»ÖÃµ½µÚÒ»¸ö½ÚµãµÄ¾àÀë
+        // è®¡ç®—ä»ç‚¹å‡»ä½ç½®åˆ°ç¬¬ä¸€ä¸ªèŠ‚ç‚¹çš„è·ç¦»
         if (firstClickPoint != null) {
             pixelLength += Math.sqrt(
                 Math.pow(firstClickPoint.x - path.get(0).x, 2) +
@@ -384,7 +384,7 @@ public class FindPath extends JFrame {
             );
         }
         
-        // ¼ÆËã½Úµã¼äµÄ¾àÀë
+        // è®¡ç®—èŠ‚ç‚¹é—´çš„è·ç¦»
         for (int i = 0; i < path.size() - 1; i++) {
             Node current = path.get(i);
             Node next = path.get(i + 1);
@@ -397,7 +397,7 @@ public class FindPath extends JFrame {
             }
         }
         
-        // ¼ÆËã´Ó×îºóÒ»¸ö½Úµãµ½ÖÕµãµÄ¾àÀë
+        // è®¡ç®—ä»æœ€åä¸€ä¸ªèŠ‚ç‚¹åˆ°ç»ˆç‚¹çš„è·ç¦»
         if (secondClickPoint != null && !path.isEmpty()) {
             Node lastNode = path.get(path.size() - 1);
             pixelLength += Math.sqrt(
@@ -406,7 +406,7 @@ public class FindPath extends JFrame {
             );
         }
         
-        // ×ª»»ÎªÊµ¼Ê¾àÀë£¨Ã×£©
+        // è½¬æ¢ä¸ºå®é™…è·ç¦»ï¼ˆç±³ï¼‰
         return pixelLength / PIXELS_PER_METER;
     }
 
@@ -415,18 +415,18 @@ public class FindPath extends JFrame {
         super.paint(g);
         Graphics2D g2d = (Graphics2D) g;
         
-        // ÉèÖÃ¿¹¾â³İ
+        // è®¾ç½®æŠ—é”¯é½¿
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         
-        // ÉèÖÃÏßÌõ´ÖÏ¸
+        // è®¾ç½®çº¿æ¡ç²—ç»†
         g2d.setStroke(new BasicStroke(5.0f));
 
-        // »æÖÆ´Óµã»÷Î»ÖÃµ½×î½ü½ÚµãµÄÁ¬Ïß
+        // ç»˜åˆ¶ä»ç‚¹å‡»ä½ç½®åˆ°æœ€è¿‘èŠ‚ç‚¹çš„è¿çº¿
         g2d.setColor(new Color(255, 0, 0));
         if (firstClickPoint != null && startNode != null) {
-            // ¿¼ÂÇµØÍ¼Æ«ÒÆÁ¿»æÖÆÏßÌõ
+            // è€ƒè™‘åœ°å›¾åç§»é‡ç»˜åˆ¶çº¿æ¡
             g2d.drawLine(
-                firstClickPoint.x + 12,  // ¼Ó»ØÆ«ÒÆÁ¿
+                firstClickPoint.x + 12,  // åŠ å›åç§»é‡
                 firstClickPoint.y + 37,
                 startNode.x + 9, 
                 startNode.y + 28
@@ -434,14 +434,14 @@ public class FindPath extends JFrame {
         }
         if (secondClickPoint != null && endNode != null) {
             g2d.drawLine(
-                secondClickPoint.x + 12,  // ¼Ó»ØÆ«ÒÆÁ¿
+                secondClickPoint.x + 12,  // åŠ å›åç§»é‡
                 secondClickPoint.y + 37,
                 endNode.x + 9,
                 endNode.y + 28
             );
         }
 
-        // »æÖÆÎ»ÖÃÍ¼±ê
+        // ç»˜åˆ¶ä½ç½®å›¾æ ‡
         if (firstClickPoint != null) {
             drawLocationIcon(g2d, firstClickPoint.x + 15, firstClickPoint.y + 30);
         }
@@ -451,7 +451,7 @@ public class FindPath extends JFrame {
     }
 
     private void drawLocationIcon(Graphics2D g2d, int x, int y) {
-        // »æÖÆÍ¼±ê£¬Ê¹ÆäÖĞĞÄÎ»ÓÚµã»÷Î»ÖÃ
+        // ç»˜åˆ¶å›¾æ ‡ï¼Œä½¿å…¶ä¸­å¿ƒä½äºç‚¹å‡»ä½ç½®
         g2d.drawImage(locationIcon.getImage(), 
                       x - locationIcon.getIconWidth()/2, 
                       y - locationIcon.getIconHeight()/2, 
@@ -460,29 +460,29 @@ public class FindPath extends JFrame {
                       null);
     }
 
-    // Ìí¼Ó¼ÆËã»»Ëã±ÈÀıµÄ·½·¨
+    // æ·»åŠ è®¡ç®—æ¢ç®—æ¯”ä¾‹çš„æ–¹æ³•
     private static double calculatePixelsPerMeter(Point p1, Point p2, double realDistanceInMeters) {
         double pixelDistance = Math.sqrt(
             Math.pow(p2.x - p1.x, 2) + 
             Math.pow(p2.y - p1.y, 2)
         );
-        return pixelDistance / realDistanceInMeters;  // ÏñËØ/Ã×
+        return pixelDistance / realDistanceInMeters;  // åƒç´ /ç±³
     }
 
-    // Ìí¼Ó½Úµã´¦Àí·½·¨
+    // æ·»åŠ èŠ‚ç‚¹å¤„ç†æ–¹æ³•
     private void handleAddNode(MouseEvent e) {
         int x = e.getX() - 10;
         int y = e.getY() - 10;
-        String name = JOptionPane.showInputDialog(this, "ÇëÊäÈë½ÚµãÃû³Æ£º");
+        String name = JOptionPane.showInputDialog(this, "è¯·è¾“å…¥èŠ‚ç‚¹åç§°ï¼š");
         if (name != null && !name.trim().isEmpty()) {
             Node newNode = new Node(name.trim(), x, y);
             nodes.add(newNode);
             NodeFileManager.saveNodes(nodes);
             
-            // Ñ¯ÎÊÊÇ·ñÌí¼ÓÁ¬½Ó
+            // è¯¢é—®æ˜¯å¦æ·»åŠ è¿æ¥
             int choice = JOptionPane.showConfirmDialog(this, 
-                "ÊÇ·ñÌí¼ÓÓëÆäËû½ÚµãµÄÁ¬½Ó£¿", 
-                "Ìí¼ÓÁ¬½Ó", 
+                "æ˜¯å¦æ·»åŠ ä¸å…¶ä»–èŠ‚ç‚¹çš„è¿æ¥ï¼Ÿ", 
+                "æ·»åŠ è¿æ¥", 
                 JOptionPane.YES_NO_OPTION);
             
             if (choice == JOptionPane.YES_OPTION) {
@@ -495,20 +495,20 @@ public class FindPath extends JFrame {
         }
     }
 
-    // É¾³ı½Úµã´¦Àí·½·¨
+    // åˆ é™¤èŠ‚ç‚¹å¤„ç†æ–¹æ³•
     private void handleDeleteNode(MouseEvent e) {
         int x = e.getX() - 10;
         int y = e.getY() - 10;
         Node nearestNode = findNearestNode(x, y);
         if (nearestNode != null) {
             int choice = JOptionPane.showConfirmDialog(this,
-                "È·¶¨ÒªÉ¾³ı½Úµã " + nearestNode.name + " Âğ£¿",
-                "É¾³ı½Úµã",
+                "ç¡®å®šè¦åˆ é™¤èŠ‚ç‚¹ " + nearestNode.name + " å—ï¼Ÿ",
+                "åˆ é™¤èŠ‚ç‚¹",
                 JOptionPane.YES_NO_OPTION);
                 
             if (choice == JOptionPane.YES_OPTION) {
                 nodes.remove(nearestNode);
-                // É¾³ı???¸Ã½ÚµãÏà¹ØµÄËùÓĞ±ß
+                // åˆ é™¤???è¯¥èŠ‚ç‚¹ç›¸å…³çš„æ‰€æœ‰è¾¹
                 edges.removeIf(edge -> 
                     edge.start == nearestNode || edge.end == nearestNode);
                 NodeFileManager.saveNodes(nodes);
@@ -521,24 +521,24 @@ public class FindPath extends JFrame {
         }
     }
 
-    // ±à¼­½Úµã´¦Àí·½·¨
+    // ç¼–è¾‘èŠ‚ç‚¹å¤„ç†æ–¹æ³•
     private void handleEditNode(MouseEvent e) {
         int x = e.getX() - 10;
         int y = e.getY() - 10;
         Node nearestNode = findNearestNode(x, y);
         if (nearestNode != null) {
             String newName = JOptionPane.showInputDialog(this,
-                "ÇëÊäÈëĞÂµÄ½ÚµãÃû³Æ£º",
+                "è¯·è¾“å…¥æ–°çš„èŠ‚ç‚¹åç§°ï¼š",
                 nearestNode.name);
                 
             if (newName != null && !newName.trim().isEmpty()) {
                 nearestNode.name = newName.trim();
                 NodeFileManager.saveNodes(nodes);
                 
-                // Ñ¯ÎÊÊÇ·ñĞŞ¸ÄÁ¬½Ó
+                // è¯¢é—®æ˜¯å¦ä¿®æ”¹è¿æ¥
                 int choice = JOptionPane.showConfirmDialog(this,
-                    "ÊÇ·ñĞŞ¸Ä½ÚµãÁ¬½Ó£¿",
-                    "ĞŞ¸ÄÁ¬½Ó",
+                    "æ˜¯å¦ä¿®æ”¹èŠ‚ç‚¹è¿æ¥ï¼Ÿ",
+                    "ä¿®æ”¹è¿æ¥",
                     JOptionPane.YES_NO_OPTION);
                     
                 if (choice == JOptionPane.YES_OPTION) {
