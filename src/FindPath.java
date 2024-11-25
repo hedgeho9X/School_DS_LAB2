@@ -596,14 +596,11 @@ public class FindPath extends JFrame {
 
 ---
 
-### **3. 数据结构与算法（Person C）**
-负责底层逻辑的实现，包括数据存储、路径计算和文件读写。
+### **3. 数据结构（Person C）**
+负责底层逻辑的实现，包括数据存储和文件读写。
 - **主要职责：**
   - **节点与边的数据模型：**
     - 维护 `Node` 和 `Edge` 的类定义和数据操作。
-  - **路径算法：**
-    - `Dijkstra.findShortestPath()`：实现最短路径算法。
-    - 处理 `findPaths()` 和路径长度计算：`calculatePathLength()`。
   - **数据文件管理：**
     - 实现 `NodeFileManager` 的节点与边数据的保存与加载逻辑。
     - 确保数据在退出和启动时能正确加载和更新。
