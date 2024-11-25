@@ -44,7 +44,7 @@ public class FindPath extends JFrame {
         
         // 修改图片加载和显示
         try {
-            mapImage = new ImageIcon("D:\\tecentQQ_files\\IMG_20241124_190533.jpg");
+            mapImage = new ImageIcon("SUSEmap.jpg");
             // 调整图片大小为窗口的左上部分
             Image img = mapImage.getImage();
             Image scaledImg = img.getScaledInstance(1000, 700, Image.SCALE_SMOOTH);
@@ -107,7 +107,7 @@ public class FindPath extends JFrame {
         add(mainPanel);
         
         try {
-            locationIcon = new ImageIcon("C:\\Users\\Jeery\\Downloads\\—Pngtree—positioning red cartoon illustration icon_4621669.png");
+            locationIcon = new ImageIcon("icon.png");
             // 调整图标大小为30x30像素
             Image img = locationIcon.getImage();
             Image newImg = img.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
